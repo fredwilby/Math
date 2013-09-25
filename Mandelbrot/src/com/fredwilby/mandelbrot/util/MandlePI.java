@@ -9,8 +9,8 @@ import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 
 /**
- * Uses the conjecture that the number of iterations the point (-0.75, 10^-n) = n digits of pi.   
- * @author Fred
+ * Uses the conjecture that the number of iterations the point (0.25+10^-n, 0) takes to diverge = sqrt(n) digits of pi.   
+ * @author Fred Wilby
  *
  *On my computer(Phenom II 955, so fairly modern processor): 4 correct digits (ie 3.141) takes 421 seconds 
  *and the time required afterwards increases exponentially. Basically use BBP for anything.   
@@ -86,17 +86,16 @@ public class MandlePI
 	
 	public static void main(String[] args) 
 	{
-		int[] val = new int [] { 9, 10, 11, 12, 13, 14, 15, 16, 36, 64 };
+		int[] val = new int [] { 9, 10, 11, 12, 13, 14, 15, 16 };
 		
 		for(int x : val)
 		{
 			long t0 = System.nanoTime();
 			
-			//MathContext mc = new MathContext(x, RoundingMode.HALF_EVEN);
 			Apfloat pi = genPi(x, 64);
 		
 			double dt = (double)(System.nanoTime()-t0) / 1000000000d;
-			System.out.println(x+"\t"+dt +"\t"+ pi.precision(x));
+			System.out.println(x+"\t"+dt +"\t"+ pi);
 		}
 
 	}
