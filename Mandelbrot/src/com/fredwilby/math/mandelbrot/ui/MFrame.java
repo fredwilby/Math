@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 public class MFrame extends JFrame 
 {
-	public static final int FWIDTH = 1024, CWIDTH=250, HEIGHT = (int) ((2.0/3.5)*FWIDTH);
+	public static final int FWIDTH = 1600, CWIDTH=250, HEIGHT = (int) ((2.0/3.5)*FWIDTH);
 	private MPanel mandel;
 	private CPanel brot;
 	private JPanel cont;

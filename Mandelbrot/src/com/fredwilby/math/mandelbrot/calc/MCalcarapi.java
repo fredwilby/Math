@@ -63,8 +63,10 @@ public class MCalcarapi implements MCalc
                   
                   it++;
               }
-              
-              result[i] = (double) it - Math.log((Math.log(zi*zi+zj*zj)/log4))/log2;;
+              if(it == max_it)
+                  result[i] = 0;
+              else
+                  result[i] = (double) it - Math.log((Math.log(zi*zi+zj*zj)/log4))/log2;;
           }
         };
         

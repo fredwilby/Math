@@ -5,7 +5,7 @@ import java.awt.Color;
 public class ColorMap 
 {
 	private static final int repeats = 2; 	// change the frequency of color change
-	private static final double offset = -.3; // change the 'starting' color
+	private static final double offset = 0; // change the 'starting' color
 	
 	public static Color getColor(double ix, long max)
 	{
