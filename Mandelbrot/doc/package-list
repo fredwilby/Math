@@ -1,4 +1,4 @@
-com.fredwilby.mandelbrot.calc
-com.fredwilby.mandelbrot.color
-com.fredwilby.mandelbrot.ui
-com.fredwilby.mandelbrot.util
+com.fredwilby.math.mandelbrot.calc
+com.fredwilby.math.mandelbrot.color
+com.fredwilby.math.mandelbrot.ui
+com.fredwilby.math.misc
