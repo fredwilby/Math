@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import com.fredwilby.math.mandelbrot.calc.MCalc;
 import com.fredwilby.math.mandelbrot.calc.MCalcThreaded;
+import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
 import com.fredwilby.math.mandelbrot.color.ColorMap;
 
@@ -37,13 +38,17 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 	public MPanel(int w, int h)
 	{
 		super();
+
 		this.w = w;
 		this.h = h;
 		
+		
 		plots = new ArrayList<RDEventListener>();
 		
-		view = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);	
-		calculator = new MCalcThreaded();
+		view = new BufferedImage(this.w, this.h, BufferedImage.TYPE_INT_RGB);	
+
+		//calculator = new MCalcThreaded();
+		calculator = new MCalcarapi();
 	}
 	
 	@Override
@@ -95,7 +100,8 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 	@Override
 	public void paint(Graphics G)
 	{
-		G.drawImage(view, 0, 0, null);
+	    G.drawImage(view, 0, 0, w, h, 0, 0, w, h, null);
+//		G.drawImage(view, 0, 0, null);
 		//G.drawImage(view, 0, 0, d.width, d.height, offset.x, offset.y, offset.x+d.width, offset.y+d.height, null);
 	}
 

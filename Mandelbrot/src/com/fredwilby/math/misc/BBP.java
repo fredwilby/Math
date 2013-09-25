@@ -2,12 +2,13 @@ package com.fredwilby.math.misc;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Scanner;
 
-public class BBP {
+public class BBP
+{
 	
 	/* Progress update vars */
 	private volatile int prog;
@@ -72,7 +73,7 @@ public class BBP {
 
 	/**
 	 * Computes a single term of the general BBP-like formula with the given parameters.
-	 * 
+	 * see: http://en.wikipedia.org/wiki/Bailey%E2%80%93Borwein%E2%80%93Plouffe_formula#Specializations
 	 * @param mc the MathContext to use for the calculation
 	 */
 	public static BigDecimal term(int k, int s, int b, int m, int[] A, MathContext mc)
@@ -147,7 +148,14 @@ public class BBP {
 	
 	public static void main(String[] args) 
 	{
-		MathContext mc = new MathContext(5000, RoundingMode.HALF_EVEN);
+	    Scanner scan = new Scanner(System.in);
+	    
+	    System.out.print("How many digits would you like to generate? ");
+	    int digits = scan.nextInt();
+	    
+	    System.out.print("\nWhere would you like to store the result? ");
+	    
+		MathContext mc = new MathContext(digits + 1, RoundingMode.HALF_EVEN);
 		
 		String megaString = pi();
 		

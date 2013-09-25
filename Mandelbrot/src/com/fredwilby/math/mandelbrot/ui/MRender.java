@@ -1,11 +1,10 @@
 package com.fredwilby.math.mandelbrot.ui;
 
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-import com.fredwilby.math.mandelbrot.calc.MCalcThreaded;
+import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
 import com.fredwilby.math.mandelbrot.color.ColorMap;
 
@@ -22,7 +21,7 @@ public class MRender
 		final int max_size = 2000, threads = 8;
 		progress = 0;
 		
-		MCalcThreaded mc = new MCalcThreaded(threads);
+		MCalcarapi mc = new MCalcarapi();
 		ViewConverter vc = new ViewConverter(param.pixel_size, param.tl, param.br);
 		
 		int gridw = (int)Math.ceil((double) param.pixel_size.width/(double) max_size),
