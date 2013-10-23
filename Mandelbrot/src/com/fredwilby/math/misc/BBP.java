@@ -163,7 +163,7 @@ public class BBP
 		BigDecimal pi = bbp.calcPi(mc);
 		int sd = sharedDigits(pi.toString(),megaString);
 		
-		for(int x = 0; x < 20; x++)
+		for(int x = 0; x < 19; x++)
 		{
 			System.out.println(pi.toString().substring(250*x, 250*(x+1)));		
 		}

@@ -1,6 +1,8 @@
 package com.fredwilby.math.mandelbrot.ui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
@@ -9,11 +11,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import net.miginfocom.layout.CC;
 import net.miginfocom.swing.MigLayout;
@@ -27,9 +32,11 @@ import net.miginfocom.swing.MigLayout;
 public class CPanel extends JPanel implements RDEventListener
 {
 	private ArrayList<RDEventListener> plots;
+	private JList<RDEvent> saved; 
+	private DefaultListModel<RDEvent> savedModel;
 	private JTextField jtli, jtlj,jbri, jbrj, jitf, jwf, jhf;
 	private JLabel jrl, jtl, jbr, i1,i2, jit, jw, jh, jrd;
-	private JButton redrawb,renderb;
+	private JButton redrawb,renderb,save,recall;
 	private JProgressBar renderbar;
 	private MigLayout lay;
 	private final int boxw = 15;
@@ -42,6 +49,8 @@ public class CPanel extends JPanel implements RDEventListener
 	{
 		fw = w;
 		fh = h;
+		
+		savedModel = new DefaultListModel<RDEvent>();
 
 		setupUI();
 	}
@@ -82,7 +91,7 @@ public class CPanel extends JPanel implements RDEventListener
 		
 		/* Redraw button*/
 		redrawb = new JButton("Redraw");
-		redrawb.addMouseListener(redrawml);
+		redrawb.addActionListener(redrawml);
 		add(redrawb, new CC().growX().span(3).wrap());
 		
 		/* Redraw status label */
@@ -116,7 +125,39 @@ public class CPanel extends JPanel implements RDEventListener
 		jrl = new JLabel("No Render Task.");
 		
 		add(renderbar, new CC().grow().spanX(3).wrap());
-		add(jrl, "span 3");
+		add(jrl, new CC().grow().spanX(3).wrap());
+		
+		save = new JButton("Save View");
+		save.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                saveRDEvent();
+            }
+		
+		});
+		
+		add(save);
+		
+		recall = new JButton("Recall View");
+		recall.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                recallRDEvent();
+            }
+		    
+		    
+		    
+		});
+		
+		add(recall, "wrap");
+		
+		saved = new JList<RDEvent>(savedModel);
+		saved.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		add(saved, new CC().spanX(3).grow().wrap());
 	}
 	
 	private void render()
@@ -165,6 +206,18 @@ public class CPanel extends JPanel implements RDEventListener
 		}
 	}
 	
+	private void saveRDEvent()
+	{
+	    savedModel.addElement(getEvent());
+	}
+	
+	private void recallRDEvent()
+	{
+	    RDEvent recall = saved.getSelectedValue();
+	    
+	    if(recall != null)
+	        sendRDEvent(recall);
+	}
 	private RDEvent getEvent()
 	{	
 		tl = new Point2D.Double(Double.parseDouble(jtli.getText()),Double.parseDouble(jtlj.getText()));
@@ -229,31 +282,16 @@ public class CPanel extends JPanel implements RDEventListener
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {}	
-	}, redrawml = new MouseListener() {
-		@Override
-		public void mouseClicked(MouseEvent arg0) 
-		{
-			new Thread(new Runnable() 
-			{
-				
-			public void run()
-			{
-			sendRDEvent(getEvent());
-			}
-			}).start();
-		}
+	};
+    ActionListener redrawml = new ActionListener() {
 
-		@Override
-		public void mouseEntered(MouseEvent arg0) {}
+        @Override
+        public void actionPerformed(ActionEvent arg0)
+        {
 
-		@Override
-		public void mouseExited(MouseEvent arg0) {}
+            sendRDEvent(getEvent());
 
-		@Override
-		public void mousePressed(MouseEvent arg0) {}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {}	
+        }	
 	};
 	
 }

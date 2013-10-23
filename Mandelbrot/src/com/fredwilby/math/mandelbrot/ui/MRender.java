@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
+import com.fredwilby.math.mandelbrot.color.AbstractColorMap;
 import com.fredwilby.math.mandelbrot.color.ColorMap;
 
 /**
@@ -53,13 +54,14 @@ public class MRender
 				Point2D.Double tl = vc.convert(max_size*x, max_size*y);
 				Point2D.Double br = vc.convert(max_size*x+incw, max_size*y+inch);
 				RDEvent rend = new RDEvent(new Dimension(incw,inch), tl,br, param.iterations);
+				AbstractColorMap map = new ColorMap();
 					
 				double[][] data = mc.normalizedIterationValues(rend);
 					
 				for(int xx = 0; xx < data.length; xx++)
 					for(int yy = 0; yy < data[0].length; yy++)
 					{
-						bff.setRGB(x*max_size+xx, y*max_size+yy, ColorMap.getColor(data[xx][yy], param.iterations).getRGB());
+						bff.setRGB(x*max_size+xx, y*max_size+yy, map.getColor(data[xx][yy], param.iterations).getRGB());
 					}
 
 			}

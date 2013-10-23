@@ -29,7 +29,7 @@ public class MFrame extends JFrame
 		/* Setup fractal View */
 		mandel = new MPanel(FWIDTH, HEIGHT);
 		mandel.setPreferredSize(new Dimension(FWIDTH, HEIGHT));
-		cont.addMouseListener(mandel);
+		mandel.addMouseListener(mandel);
 		
 		brot   = new CPanel(FWIDTH, HEIGHT);
 		mandel.addRDEventListener(brot);
