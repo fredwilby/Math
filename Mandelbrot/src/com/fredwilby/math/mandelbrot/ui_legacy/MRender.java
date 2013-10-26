@@ -1,4 +1,4 @@
-package com.fredwilby.math.mandelbrot.ui;
+package com.fredwilby.math.mandelbrot.ui_legacy;
 
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
@@ -11,8 +11,16 @@ import com.fredwilby.math.mandelbrot.color.InterpolatedColorMap;
 import com.fredwilby.math.mandelbrot.color.SinusoidalColorMap;
 
 /**
- * Seems to be able to render up to 30k wide images. Conserves memory by splitting job into parts allowing for large images to be rendered.
+ * Seems to be able to render up to 30k wide images. Conserves memory by 
+ * splitting job into parts allowing for large images to be rendered.
  * 
+ * Seems to exhibit odd performance issues: 1st 1/2 - 2/3 runs fairly quickly
+ * then it becomes much slower until the end. System slowdown becomes pretty
+ * total for a large part of the render. Hopefully DMI (below) will ameliorate 
+ * these issues. 
+ * 
+ * TODO DiskMemImage: http://jaitools.org/docs/jaitools/stable/apidocs/
+ * or pngj https://code.google.com/p/pngj/
  */
 public class MRender 
 {
@@ -20,7 +28,7 @@ public class MRender
 	
 	public static BufferedImage render(RDEvent param)
 	{
-		final int max_size = 2000, threads = 8;
+		final int max_size = 2000;
 		progress = 0;
 		
 		MCalcarapi mc = new MCalcarapi();

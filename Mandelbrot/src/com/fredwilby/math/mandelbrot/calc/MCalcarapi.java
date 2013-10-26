@@ -3,7 +3,7 @@ package com.fredwilby.math.mandelbrot.calc;
 import java.awt.geom.Point2D;
 
 import com.amd.aparapi.Kernel;
-import com.fredwilby.math.mandelbrot.ui.RDEvent;
+import com.fredwilby.math.mandelbrot.ui_legacy.RDEvent;
 
 public class MCalcarapi implements MCalc
 {

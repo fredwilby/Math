@@ -1,4 +1,4 @@
-package com.fredwilby.math.mandelbrot.ui;
+package com.fredwilby.math.mandelbrot.ui_legacy;
 
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
