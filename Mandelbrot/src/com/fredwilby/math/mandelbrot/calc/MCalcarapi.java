@@ -31,7 +31,7 @@ public class MCalcarapi implements MCalc
         final double[] inputs = new double[result.length*2];
         final long max_it = redraw.iterations; 
         
-        final double log4 = Math.log(4.0), log2 = Math.log(2.0);
+        final double log2 = Math.log(2.0);
         
         ViewConverter vc = new ViewConverter(redraw.pixel_size, redraw.tl, redraw.br);
 
@@ -57,7 +57,7 @@ public class MCalcarapi implements MCalc
               
               while(zi*zi+zj*zj < 4 && it < max_it)
               {
-                  double t = zi*zi-zj*zj+ ci;
+                  double t = zi*zi - zj*zj + ci;
                   zj = 2*zi*zj + cj;
                   zi = t;
                   
@@ -66,7 +66,17 @@ public class MCalcarapi implements MCalc
               if(it == max_it)
                   result[i] = 0;
               else
-                  result[i] = (double) it - Math.log((Math.log(zi*zi+zj*zj)/log4))/log2;;
+              {
+                  /*
+                   * 1/2 log |Zn|^2 = log(Zn)
+                   * |Zn| = sqrt(zi*zi+zj*zj)
+                   * 
+                   * result = it + 1 + 
+                   * log2(log(|Zn|)/log(2)) = 
+                   * log(log(|Zn|^2) / 2*log(2))/log(2)       
+                   */
+                  result[i] = (double) it + 1d - Math.log((Math.log(zi*zi+zj*zj)/(2*log2)))/log2;
+              }
           }
         };
         

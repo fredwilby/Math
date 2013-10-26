@@ -2,7 +2,7 @@ package com.fredwilby.math.mandelbrot.color;
 
 import java.awt.Color;
 
-public class ColorMap implements AbstractColorMap
+public class SinusoidalColorMap implements AbstractColorMap
 {
 	private static final int repeats = 2; 	// change the frequency of color change
 	private static final double offset = 0; // change the 'starting' color

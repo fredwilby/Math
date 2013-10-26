@@ -17,6 +17,7 @@ import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
 import com.fredwilby.math.mandelbrot.color.AbstractColorMap;
 import com.fredwilby.math.mandelbrot.color.InterpolatedColorMap;
+import com.fredwilby.math.mandelbrot.color.SinusoidalColorMap;
 
 public class MPanel extends JPanel implements RDEventListener, MouseListener
 {
@@ -74,28 +75,11 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 
 		double[][] fdata = calculator.normalizedIterationValues(e);
 
-		Color[] rawmap = new Color[] {
-		        new Color(66, 30, 15),
-		        new Color(25, 7,  26),
-		        new Color(9, 1,  47),
-                new Color(4, 4,  73), 
-                new Color(0, 7, 100),
-                new Color(12, 44, 138), 
-                new Color(24, 82, 177),
-                new Color(57, 125, 209),
-                new Color(134, 181, 229),
-                new Color(211, 236, 248),
-                new Color(241, 233, 191),
-                new Color(248, 201,  95),
-                new Color(255, 170,   0),
-                new Color(204, 128,   0),
-                new Color(153,  87,   0),
-                new Color(106,  52,   3)
-		        
-		};
 		
 		
-		AbstractColorMap map = new InterpolatedColorMap(rawmap);
+		AbstractColorMap map = InterpolatedColorMap.wikiMap;
+		//AbstractColorMap map = new SinusoidalColorMap();
+		
 		
 		for(int x = 0; x < fdata.length; x++)
 			for(int y = 0; y < fdata[0].length; y++)
