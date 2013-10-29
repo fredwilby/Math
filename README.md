@@ -14,4 +14,17 @@ A UI rewrite is currently underway that will introduce a more responsive, fully-
 mousewheel scroll zooming.
 
 Aparapi is currently used for rendering, and the program is untested on systems with non-AMD graphics cards, so performance
-and functionality may vary. 
+and functionality may vary.
+
+These programs are provided under the FreeBSD License, a copy of which is provided in LICENSE.txt.
+
+This program references the following (included) libraries:
+
+Aparapi (with native binaries for Windows 32/64 bit, Linux 34/64 bit, and Mac OSX 64bit)
+APFloat
+MigLayout 4.0
+JAITools
+
+
+
+ 
