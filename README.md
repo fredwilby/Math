@@ -1,9 +1,6 @@
 Math
 ====
 
-Mandelbrot
-----------
-
 This is the eclipse project containing my Mandelbrot viewer and a few other miscillaneous math programs. 
 
 The mandelbrot viewer (started with `com.fredwilby.math.mandelbrot.ui_legacy.MFrame`) is functional though the AI isn't
