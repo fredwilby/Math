@@ -8,7 +8,6 @@ import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
 import com.fredwilby.math.mandelbrot.color.AbstractColorMap;
 import com.fredwilby.math.mandelbrot.color.InterpolatedColorMap;
-import com.fredwilby.math.mandelbrot.color.SinusoidalColorMap;
 
 /**
  * Seems to be able to render up to 30k wide images. Conserves memory by 
@@ -63,8 +62,12 @@ public class MRender
 				Point2D.Double tl = vc.convert(max_size*x, max_size*y);
 				Point2D.Double br = vc.convert(max_size*x+incw, max_size*y+inch);
 				RDEvent rend = new RDEvent(new Dimension(incw,inch), tl,br, param.iterations);
+				
 				AbstractColorMap map = InterpolatedColorMap.wikiMap;
-					
+				
+				//  = new DirectHSVColorMap();
+				
+				
 				double[][] data = mc.normalizedIterationValues(rend);
 					
 				for(int xx = 0; xx < data.length; xx++)

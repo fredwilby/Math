@@ -16,6 +16,7 @@ import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
 import com.fredwilby.math.mandelbrot.color.AbstractColorMap;
 import com.fredwilby.math.mandelbrot.color.DirectHSVColorMap;
+import com.fredwilby.math.mandelbrot.color.InterpolatedColorMap;
 
 public class MPanel extends JPanel implements RDEventListener, MouseListener
 {
@@ -39,7 +40,6 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 
 		this.w = w;
 		this.h = h;
-		
 		
 		plots = new ArrayList<RDEventListener>();
 		
@@ -75,7 +75,7 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 
 		
 		
-		AbstractColorMap map = new DirectHSVColorMap();
+		AbstractColorMap map = InterpolatedColorMap.wikiMap;
 		//AbstractColorMap map = new SinusoidalColorMap();
 		
 		

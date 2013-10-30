@@ -43,6 +43,7 @@ public class MFrame extends JFrame
 				
 		pack();
 		setVisible(true);
+		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 	}
