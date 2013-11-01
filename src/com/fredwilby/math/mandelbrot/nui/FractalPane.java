@@ -34,6 +34,7 @@ public class FractalPane extends JPanel implements Runnable, MouseMotionListener
         super(); // why not?
         
         size = new Dimension(width, height);
+        setPreferredSize(size);
         
         renderer = drawer; 
         colorGen = colorer; 
