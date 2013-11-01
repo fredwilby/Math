@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 
 import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
-import com.fredwilby.math.mandelbrot.color.AbstractColorMap;
-import com.fredwilby.math.mandelbrot.color.InterpolatedColorMap;
+import com.fredwilby.math.mandelbrot.color.ColorModel;
+import com.fredwilby.math.mandelbrot.color.InterpolatedColorModel;
 
 /**
  * Seems to be able to render up to 30k wide images. Conserves memory by 
@@ -63,7 +63,7 @@ public class MRender
 				Point2D.Double br = vc.convert(max_size*x+incw, max_size*y+inch);
 				RDEvent rend = new RDEvent(new Dimension(incw,inch), tl,br, param.iterations);
 				
-				AbstractColorMap map = InterpolatedColorMap.wikiMap;
+				ColorModel map = InterpolatedColorModel.wikiMap;
 				
 				//  = new DirectHSVColorMap();
 				
@@ -73,7 +73,7 @@ public class MRender
 				for(int xx = 0; xx < data.length; xx++)
 					for(int yy = 0; yy < data[0].length; yy++)
 					{
-						bff.setRGB(x*max_size+xx, y*max_size+yy, map.getColor(data[xx][yy], param.iterations).getRGB());
+						bff.setRGB(x*max_size+xx, y*max_size+yy, map.getColor(data[xx][yy]).getRGB());
 					}
 
 			}

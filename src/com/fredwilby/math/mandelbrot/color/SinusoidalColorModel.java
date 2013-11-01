@@ -2,12 +2,19 @@ package com.fredwilby.math.mandelbrot.color;
 
 import java.awt.Color;
 
-public class SinusoidalColorMap implements AbstractColorMap
+public class SinusoidalColorModel implements ColorModel
 {
 	private static final int repeats = 2; 	// change the frequency of color change
 	private static final double offset = 0; // change the 'starting' color
 	
-	public Color getColor(double ix, long max)
+	private long max;
+	
+	public SinusoidalColorModel(long max)
+	{
+	    this.max = max;
+	}
+	
+	public Color getColor(double ix)
 	{
 		double x = (ix*repeats)/max + offset;
 		

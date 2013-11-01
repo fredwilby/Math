@@ -14,9 +14,8 @@ import javax.swing.JPanel;
 import com.fredwilby.math.mandelbrot.calc.MCalc;
 import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
-import com.fredwilby.math.mandelbrot.color.AbstractColorMap;
-import com.fredwilby.math.mandelbrot.color.DirectHSVColorMap;
-import com.fredwilby.math.mandelbrot.color.InterpolatedColorMap;
+import com.fredwilby.math.mandelbrot.color.ColorModel;
+import com.fredwilby.math.mandelbrot.color.InterpolatedColorModel;
 
 public class MPanel extends JPanel implements RDEventListener, MouseListener
 {
@@ -75,13 +74,13 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 
 		
 		
-		AbstractColorMap map = InterpolatedColorMap.wikiMap;
-		//AbstractColorMap map = new SinusoidalColorMap();
+		ColorModel map = InterpolatedColorModel.wikiMap;
+		// = new SinusoidalColorMap(it);
 		
 		
 		for(int x = 0; x < fdata.length; x++)
 			for(int y = 0; y < fdata[0].length; y++)
-				view.setRGB(x, y, map.getColor(fdata[x][y], it).getRGB());
+				view.setRGB(x, y, map.getColor(fdata[x][y]).getRGB());
 
 		
 		// TODO adjust image size if needed

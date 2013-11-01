@@ -2,14 +2,14 @@ package com.fredwilby.math.mandelbrot.color;
 
 import java.awt.Color;
 
-public class InterpolatedColorMap implements AbstractColorMap
+public class InterpolatedColorModel implements ColorModel
 {
     private Color[] colors;
     
     
     
     /* Coloring from wikipedia's section on the algorithm */
-    public static final InterpolatedColorMap wikiMap = new InterpolatedColorMap(
+    public static final InterpolatedColorModel wikiMap = new InterpolatedColorModel(
             new Color[] {
                 new Color(66, 30, 15),
                 new Color(25, 7,  26),
@@ -30,7 +30,7 @@ public class InterpolatedColorMap implements AbstractColorMap
                 
         });
     
-    public InterpolatedColorMap(Color[] colors)
+    public InterpolatedColorModel(Color[] colors)
     {
         this.colors = colors;
     }
@@ -41,7 +41,7 @@ public class InterpolatedColorMap implements AbstractColorMap
      * TODO fix banding issue 
      */
     @Override
-    public Color getColor(double ix, long max)
+    public Color getColor(double ix)
     {
         /* lower density seems to make bands less obvious, but still present. */ 
         final float density = .3f; 

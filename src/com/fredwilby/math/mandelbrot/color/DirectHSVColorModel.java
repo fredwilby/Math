@@ -2,11 +2,10 @@ package com.fredwilby.math.mandelbrot.color;
 
 import java.awt.Color;
 
-public class DirectHSVColorMap implements AbstractColorMap
+public class DirectHSVColorModel implements ColorModel
 {
-
     @Override
-    public Color getColor(double ix, long max)
+    public Color getColor(double ix)
     {
         final float density = .05f; 
                 
