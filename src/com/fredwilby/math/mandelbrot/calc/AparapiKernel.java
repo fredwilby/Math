@@ -3,9 +3,10 @@ package com.fredwilby.math.mandelbrot.calc;
 import java.awt.geom.Point2D;
 
 import com.amd.aparapi.Kernel;
+import com.fredwilby.math.mandelbrot.nui.View;
 import com.fredwilby.math.mandelbrot.ui_legacy.RDEvent;
 
-public class MCalcarapi implements MCalc
+public class AparapiKernel implements RenderKernel<Double, Point2D.Double>
 {
 	class MandelKernel extends Kernel
 	{
@@ -28,6 +29,7 @@ public class MCalcarapi implements MCalc
 			return result;
 		}
 		
+
 		@Override public void run()
         {
 			int i = getGlobalId();
@@ -61,8 +63,25 @@ public class MCalcarapi implements MCalc
       }
   }
 	}
-
-    @Override    
+	
+    @Override 
+    public void startRender(Point2D.Double[] input, View<Point2D.Double> view)
+    {
+        
+    }
+    
+	@Override
+	public double getProgress()
+	{
+	    return 0d;
+	}
+    
+	@Override
+	public Double[][] getData()
+	{
+	    return new Double[1][1];
+	}
+	
     public double[][] normalizedIterationValues(RDEvent  redraw)
     {
         double[] flat = flatNormalizedIterationValues(redraw);

@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
+import com.fredwilby.math.mandelbrot.calc.AparapiKernel;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
 import com.fredwilby.math.mandelbrot.color.ColorModel;
 import com.fredwilby.math.mandelbrot.color.InterpolatedColorModel;
@@ -30,7 +30,7 @@ public class MRender
 		final int max_size = 2000;
 		progress = 0;
 		
-		MCalcarapi mc = new MCalcarapi();
+		AparapiKernel mc = new AparapiKernel();
 		ViewConverter vc = new ViewConverter(param.pixel_size, param.tl, param.br);
 		
 		int gridw = (int)Math.ceil((double) param.pixel_size.width/(double) max_size),

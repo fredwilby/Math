@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import com.fredwilby.math.mandelbrot.calc.MCalc;
-import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
+import com.fredwilby.math.mandelbrot.calc.AparapiKernel;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
 import com.fredwilby.math.mandelbrot.color.ColorModel;
 import com.fredwilby.math.mandelbrot.color.InterpolatedColorModel;
 
 public class MPanel extends JPanel implements RDEventListener, MouseListener
 {
-	private MCalc calculator;
+	private RenderKernel calculator;
 	private BufferedImage view; 
 	private ViewConverter vc;
 	private ArrayList<RDEventListener> plots;
@@ -45,7 +45,7 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 		view = new BufferedImage(this.w, this.h, BufferedImage.TYPE_INT_RGB);	
 
 		//calculator = new MCalcThreaded();
-		calculator = new MCalcarapi();
+		calculator = new AparapiKernel();
 	}
 	
 	@Override

@@ -10,6 +10,7 @@ import java.util.ArrayDeque;
 
 import javax.swing.JPanel;
 
+import com.fredwilby.math.mandelbrot.calc.RenderKernel;
 import com.fredwilby.math.mandelbrot.color.ColorModel;
 
 public class FractalPane extends JPanel implements Runnable, MouseMotionListener, MouseWheelListener
