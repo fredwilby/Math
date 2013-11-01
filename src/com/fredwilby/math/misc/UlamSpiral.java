@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -32,8 +31,10 @@ public class UlamSpiral
     
     private void genSpiral()
     {
-        int x = (int)Math.ceil((double) sideLength / 2d)-1,
-            y = sideLength/2;
+        final int originx = (int)Math.ceil((double) sideLength / 2d)-1,
+                  originy = sideLength/2; 
+        
+        int x = originx, y = originy;
         
         int val = 1, cd = 0;
         
@@ -62,13 +63,20 @@ public class UlamSpiral
             }
         }
         
+        final Color center = new Color(249, 49, 49),
+                    edge = new Color(229, 139, 29);
+        
         for(int xx = 0; xx < sideLength; xx++)
         {
             for(int yy = 0; yy < sideLength; yy++)
             {
                 if(isPrime(spiralNumbers[xx][yy]))
-                {
-                   spiralData[xx][yy] = Color.black;
+                {                    
+                    Color pixel = interpolate((double)spiralNumbers[xx][yy]/
+                                              ((double)sideLength*sideLength),
+                                              center, edge);
+                    
+                   spiralData[xx][yy] = pixel;
                 } else
                 {
                     spiralData[xx][yy] = Color.white;
@@ -76,6 +84,20 @@ public class UlamSpiral
             }
         }
         
+    }
+    
+    private int interpolate(double pos, int a, int b)
+    {
+        return (int) ((1d - pos) * a + pos * b);
+    }
+    
+    private Color interpolate(double pos, Color a, Color b)
+    {
+        Color result = new Color(interpolate(pos, a.getRed(),   b.getRed()),
+                                 interpolate(pos, a.getGreen(), b.getGreen()),
+                                 interpolate(pos, a.getBlue(),  b.getBlue()));
+        
+        return result;        
     }
     
     private boolean isPrime(int num)
@@ -112,15 +134,26 @@ public class UlamSpiral
         return result.toString();
     }
     
+    /**
+     * Returns a upperb-large array of boolean that satisfy
+     * prime[x] == true iff x is prime. Uses seive of eratosthenes.
+     * 
+     */
     public boolean[] getPrimesBelow(int upperb)
     {
         boolean[] ints = new boolean[upperb];
         
+        /* initialize all values to true */
         for(int x = 0; x < upperb; x++)
         {
             ints[x] = true;
         }
         
+        /* 0, 1 are not prime */
+        ints[0] = false;
+        ints[1] = false; 
+        
+        /* eliminate all composites */ 
         for(int x = 2; x < Math.sqrt(upperb); x++)
         {
             if(ints[x])
@@ -135,7 +168,7 @@ public class UlamSpiral
     
     public static void main(String[] args)
     {
-        final int pxs = 1, size = 7000; 
+        final int pxs = 2, size = 500; 
         
         UlamSpiral us = new UlamSpiral(size); 
         
@@ -151,10 +184,8 @@ public class UlamSpiral
         {
             for(int y = 0; y < size; y++)
             {
-                if(us.getColor(x, y).equals(Color.black))
-                {
+                    G.setColor(us.getColor(x, y));
                     G.fillRect(x*pxs, y*pxs, pxs, pxs);
-                }
             }
         }
         
