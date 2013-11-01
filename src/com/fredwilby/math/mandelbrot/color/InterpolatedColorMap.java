@@ -50,12 +50,12 @@ public class InterpolatedColorMap implements AbstractColorMap
         if(ix == 0d)
             return Color.black;
         
-        int indexa = (int) Math.floor(density*ix), indexb = (int) Math.floor(density*ix) + 1; 
+        int index = (int) (density*ix); 
         
-        Color a = colors[indexa % colors.length], 
-              b = colors[indexb % colors.length];
+        Color a = colors[index % colors.length], 
+              b = colors[(index+1) % colors.length];
         
-        double c = (density*ix) - indexa; // decimal part of ix
+        double c = (density*ix) - index; // decimal part of ix
         
         return interpolate(c, a, b);
     }
