@@ -46,6 +46,9 @@ public abstract class SpiralWindow
      */
     public abstract Color getPoint(int pos);    
     
+    /**
+     * Performs setup needed to perform getPoint method.
+     */
     public abstract void setup();
 
     /**
@@ -107,7 +110,7 @@ public abstract class SpiralWindow
     
     public static void Show(SpiralWindow toShow)
     {   
-        JFrame window = new JFrame("Ulam Spiral");
+        JFrame window = new JFrame(toShow.getClass().getSimpleName());
      
         BufferedImage img = toShow.getImage();
         
