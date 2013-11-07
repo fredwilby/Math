@@ -2,9 +2,6 @@ package com.fredwilby.math.misc;
 
 import java.awt.Color;
 
-import com.fredwilby.math.mandelbrot.color.ColorModel;
-import com.fredwilby.math.mandelbrot.color.DirectHSVColorModel;
-
 public class CollatzSpiral extends SpiralWindow
 {
     private int max;
@@ -55,8 +52,6 @@ public class CollatzSpiral extends SpiralWindow
     public static void main(String[] args)
     {
         SpiralWindow.Show(new CollatzSpiral(1000));
-        
-                    
     }
 
 }
