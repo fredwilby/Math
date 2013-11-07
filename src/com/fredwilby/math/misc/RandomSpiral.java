@@ -19,14 +19,16 @@ public class RandomSpiral extends SpiralWindow
         int shade  = r.nextInt(256);
         return new Color(shade, shade, shade);
     }
-    
+
+    @Override
+    public void setup()
+    {
+        r = new Random();
+    }
 
     @Override
     public Color getPoint(int pos)
-    {
-        if(r == null)
-            r = new Random();
-        
+    {        
         return getRandomGrey();
     }
 
@@ -34,5 +36,6 @@ public class RandomSpiral extends SpiralWindow
     {
         SpiralWindow.Show(new RandomSpiral(1000));
     }
+
     
 }

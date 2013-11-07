@@ -36,6 +36,7 @@ public abstract class SpiralWindow
         originx = (int) Math.ceil((double) sideLength / 2d)-1;
         originy = sideLength/2;
         
+        setup();
         
         genSpiral();
     }
@@ -44,6 +45,8 @@ public abstract class SpiralWindow
      * Returns the color of the given element on the spiral.
      */
     public abstract Color getPoint(int pos);    
+    
+    public abstract void setup();
 
     /**
      * Returns the sidelength of the spiral.

@@ -22,6 +22,14 @@ public class UlamSpiral extends SpiralWindow
         super(sideLength);
     }
 
+
+    @Override
+    public void setup()
+    {
+        allPrimes = getPrimesBelow(super.getSpiralLength() + 1);
+        
+    }
+    
     @Override
     public Color getPoint(int pos)
     {
@@ -48,12 +56,6 @@ public class UlamSpiral extends SpiralWindow
     
     public boolean isPrime(int num)
     {
-        /* Lazy allocation */
-        if(allPrimes == null)
-        {
-            allPrimes = getPrimesBelow(super.getSpiralLength() + 1);
-        }
-        
         return allPrimes[num];
     }
     
@@ -94,6 +96,7 @@ public class UlamSpiral extends SpiralWindow
     {
         SpiralWindow.Show(new UlamSpiral(1000));
     }
+
     
 
 }

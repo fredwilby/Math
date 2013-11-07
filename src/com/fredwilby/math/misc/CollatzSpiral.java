@@ -10,6 +10,18 @@ public class CollatzSpiral extends SpiralWindow
     {
         super(sl);
     }
+    
+
+    @Override
+    public void setup()
+    {
+        max = -1;
+        for(int x = 0; x < super.getSpiralLength(); x++)
+        {
+            if(countCollatz(x) > max)
+                max = countCollatz(x);
+        }
+    }
             
     
     public static int countCollatz(int input)
@@ -31,13 +43,6 @@ public class CollatzSpiral extends SpiralWindow
     
     public int getMaxValue()
     {
-        if(max == 0)
-        for(int x = 0; x < super.getSpiralLength(); x++)
-        {
-            if(countCollatz(x) > max)
-                max = countCollatz(x);
-        }
-        
         return max;
     }
 
@@ -53,5 +58,7 @@ public class CollatzSpiral extends SpiralWindow
     {
         SpiralWindow.Show(new CollatzSpiral(1000));
     }
+
+
 
 }
