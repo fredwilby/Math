@@ -15,4 +15,10 @@ public class DirectHSVColorModel implements ColorModel
         return new Color(Color.HSBtoRGB((float) (ix*density), .75f, .75f));
     }
 
+    @Override
+    public String toString()
+    {
+        return this.getClass().getSimpleName();
+    }
+
 }

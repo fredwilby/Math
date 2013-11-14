@@ -6,8 +6,6 @@ public class InterpolatedColorModel implements ColorModel
 {
     private Color[] colors;
     
-    
-    
     /* Coloring from wikipedia's section on the algorithm */
     public static final InterpolatedColorModel wikiMap = new InterpolatedColorModel(
             new Color[] {
@@ -72,6 +70,13 @@ public class InterpolatedColorModel implements ColorModel
                                  interpolate(pos, a.getBlue(),  b.getBlue()));
         
         return result;        
+    }
+
+
+    @Override
+    public String toString()
+    {
+        return getClass().getSimpleName();
     }
     
 

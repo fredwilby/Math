@@ -14,6 +14,7 @@ public class SinusoidalColorModel implements ColorModel
 	    this.max = max;
 	}
 	
+	@Override
 	public Color getColor(double ix)
 	{
 		double x = (ix*repeats)/max + offset;
@@ -28,5 +29,10 @@ public class SinusoidalColorModel implements ColorModel
 						 (int) (255*(1d-Math.sin(x*Math.PI))),
 						 128 + (int) (127*Math.sin(x*2*Math.PI)));
 	}
-
+	
+	@Override
+	public String toString()
+	{
+	    return getClass().getSimpleName();
+	}
 }

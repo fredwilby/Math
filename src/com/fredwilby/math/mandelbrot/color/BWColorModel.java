@@ -14,5 +14,10 @@ public class BWColorModel implements ColorModel
         else
             return Color.white;
     }
-
+    
+    @Override
+    public String toString()
+    {
+        return this.getClass().getSimpleName();
+    }
 }
