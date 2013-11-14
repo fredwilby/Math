@@ -57,10 +57,10 @@ public class RenderFrame extends JFrame
             try
             {
                 tl = new Point2D.Double(Double.parseDouble(topLeft[0].getText()),
-                                        Double.parseDouble(topLeft[0].getText()));
+                                        Double.parseDouble(topLeft[1].getText()));
                 
                 br = new Point2D.Double(Double.parseDouble(botRight[0].getText()),
-                                        Double.parseDouble(botRight[0].getText()));
+                                        Double.parseDouble(botRight[1].getText()));
                 
                 pv = new Dimension(Integer.parseInt(width.getText()), 
                                     Integer.parseInt(height.getText()));
