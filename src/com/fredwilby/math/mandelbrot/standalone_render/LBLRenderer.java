@@ -38,7 +38,7 @@ public class LBLRenderer implements BoundedRangeModel
     private ViewConverter vc;
     
     
-    public LBLRenderer(RDEvent param, ColorModel colorer, String filename) throws FileNotFoundException
+    public LBLRenderer(RDEvent param, String filename) throws FileNotFoundException
     {
         pngFile = new File(filename);
         pngInfo = new ImageInfo(param.pixel_size.width, 
@@ -52,7 +52,7 @@ public class LBLRenderer implements BoundedRangeModel
         
         cls = new ArrayList<ChangeListener>();
         
-        this.colorer = colorer;
+        this.colorer = param.model;
         
         factory = ImageLineInt.getFactory(pngInfo);
     }

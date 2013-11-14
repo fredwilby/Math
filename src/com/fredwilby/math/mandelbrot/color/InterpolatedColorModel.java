@@ -5,6 +5,8 @@ import java.awt.Color;
 public class InterpolatedColorModel implements ColorModel
 {
     private Color[] colors;
+    private String name;
+    
     
     /* Coloring from wikipedia's section on the algorithm */
     public static final InterpolatedColorModel wikiMap = new InterpolatedColorModel(
@@ -26,11 +28,13 @@ public class InterpolatedColorModel implements ColorModel
                 new Color(153,  87,   0),
                 new Color(106,  52,   3)
                 
-        });
+        }, "Color-mapping from wikipedia");
     
-    public InterpolatedColorModel(Color[] colors)
+    
+    public InterpolatedColorModel(Color[] colors, String name)
     {
         this.colors = colors;
+        this.name = name;
     }
     
 
@@ -76,7 +80,7 @@ public class InterpolatedColorModel implements ColorModel
     @Override
     public String toString()
     {
-        return getClass().getSimpleName();
+        return name;
     }
     
 

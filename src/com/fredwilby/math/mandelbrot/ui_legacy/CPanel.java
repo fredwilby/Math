@@ -6,11 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
-import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,6 +21,12 @@ import javax.swing.ListSelectionModel;
 import net.miginfocom.layout.CC;
 import net.miginfocom.swing.MigLayout;
 
+import com.fredwilby.math.mandelbrot.color.BWColorModel;
+import com.fredwilby.math.mandelbrot.color.ColorModel;
+import com.fredwilby.math.mandelbrot.color.DirectHSVColorModel;
+import com.fredwilby.math.mandelbrot.color.InterpolatedColorModel;
+import com.fredwilby.math.mandelbrot.standalone_render.LBLRenderer;
+
 /**
  * Control Panel for fractal. Responds to RDEvents from display by updating param fields. 
  * Sends RDevents when redraw button is pressed.
@@ -32,8 +36,10 @@ import net.miginfocom.swing.MigLayout;
 public class CPanel extends JPanel implements RDEventListener
 {
 	private ArrayList<RDEventListener> plots;
-	private JList<RDEvent> saved; 
+	private JList<RDEvent> saved;
+	private JList<ColorModel> colors;
 	private DefaultListModel<RDEvent> savedModel;
+	private DefaultListModel<ColorModel> colorList;
 	private JTextField jtli, jtlj,jbri, jbrj, jitf, jwf, jhf;
 	private JLabel jrl, jtl, jbr, i1,i2, jit, jw, jh, jrd;
 	private JButton redrawb,renderb,save,recall;
@@ -41,6 +47,7 @@ public class CPanel extends JPanel implements RDEventListener
 	private MigLayout lay;
 	private final int boxw = 15;
 	
+	private ColorModel model;
 	private Point2D.Double tl,br;
 	private long it = 1000;
 	private int fw, fh;
@@ -51,6 +58,10 @@ public class CPanel extends JPanel implements RDEventListener
 		fh = h;
 		
 		savedModel = new DefaultListModel<RDEvent>();
+		colorList = new DefaultListModel<ColorModel>();
+		colorList.addElement(new BWColorModel());
+		colorList.addElement(new DirectHSVColorModel());
+		colorList.addElement(InterpolatedColorModel.wikiMap);
 
 		setupUI();
 	}
@@ -88,6 +99,11 @@ public class CPanel extends JPanel implements RDEventListener
 		
 		add(jit);
 		add(jitf, new CC().growX().span(2).wrap());
+		
+		/* Color Model */
+		colors = new JList<ColorModel>(colorList);
+		colors.setSelectedIndex(2);
+		add(colors, new CC().grow().spanX(3).wrap());
 		
 		/* Redraw button*/
 		redrawb = new JButton("Redraw");
@@ -162,38 +178,30 @@ public class CPanel extends JPanel implements RDEventListener
 	
 	private void render()
 	{
-		getEvent(); // update tl, br, it based on field values 
-		
-		new Thread(new Runnable() 
-		{
-			
-			public void run() 
-			{
-				int[] renders = renderSize();
-				jrl.setText("Render in progress...");
-				
-				try
-				{
-					ImageIO.write(MRender.render(new RDEvent(new Dimension(renders[0], renders[1]),tl,br,it)), "png", new File("render"+System.currentTimeMillis()+".png"));
-			
-				} catch(IOException e) { jrl.setText("Render failed: see stack trace"); e.printStackTrace(); return; }
-				
-				
-				jrl.setText("Render ("+renders[0]+"x"+renders[1]+") complete");
-			}
-		}).start();
-		
-		new Thread(new Runnable() {
-		public void run() {
-		while(MRender.progress < 1)
-		{
-			renderbar.setValue((int)(MRender.progress*100));
-			try { Thread.sleep(100); } catch(InterruptedException e) { e.printStackTrace(); }
-		}
-			renderbar.setValue(100);
-		}
-		}).start();
-		
+	    String filename = "render-"+System.nanoTime()+".png";
+	    
+	    try
+	    {
+	        Dimension pixels = new Dimension(Integer.parseInt(jwf.getText()),
+	                                         Integer.parseInt(jhf.getText()));
+	    
+	        RDEvent theEvent = getEvent();
+	        theEvent.pixel_size = pixels;
+	        
+	        jrl.setText("Rendering...");
+	        LBLRenderer rend = new LBLRenderer(theEvent, filename);
+	        renderbar.setModel(rend);
+	        rend.writeLines();
+	        
+	    } catch(NumberFormatException nfe)
+	    {
+	        nfe.printStackTrace();  
+	    } catch(FileNotFoundException fnf)
+	    {
+	        fnf.printStackTrace();
+	    }
+	    
+	    jrl.setText("Fractal rendered to: "+filename);
 	}
 	
 	private int[] renderSize()
@@ -223,8 +231,9 @@ public class CPanel extends JPanel implements RDEventListener
 		tl = new Point2D.Double(Double.parseDouble(jtli.getText()),Double.parseDouble(jtlj.getText()));
 		br = new Point2D.Double(Double.parseDouble(jbri.getText()),Double.parseDouble(jbrj.getText()));
 		it = Integer.parseInt(jitf.getText());
+		model = colors.getSelectedValue();
 		
-		return new RDEvent(new Dimension(fw,fh),tl,br, it);
+		return new RDEvent(new Dimension(fw,fh),tl,br, model, it);
 	}
 	
 	private void sendRDEvent(RDEvent a)

@@ -66,14 +66,16 @@ public class RenderFrame extends JFrame
                                     Integer.parseInt(height.getText()));
                 its = Long.parseLong(it.getText());
                 
-                RDEvent r = new RDEvent(pv, tl, br, its);
+                
                 
                 ColorModel m = colors.getSelectedValue();
+                
+                RDEvent r = new RDEvent(pv, tl, br, m, its);
                 
                 if(m != null)
                 {
 
-                    LBLRenderer rend = new LBLRenderer(r, m, "render-"+System.nanoTime()+".png");
+                    LBLRenderer rend = new LBLRenderer(r, "render-"+System.nanoTime()+".png");
                     progress.setModel(rend);
                     lInvalid.setVisible(false);
 

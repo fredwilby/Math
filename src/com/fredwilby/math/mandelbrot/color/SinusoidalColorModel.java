@@ -33,6 +33,6 @@ public class SinusoidalColorModel implements ColorModel
 	@Override
 	public String toString()
 	{
-	    return getClass().getSimpleName();
+	    return "Sinusoidal";
 	}
 }

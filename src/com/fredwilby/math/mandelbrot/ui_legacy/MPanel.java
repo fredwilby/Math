@@ -23,6 +23,7 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 	private MCalc calculator;
 	private BufferedImage view; 
 	private ViewConverter vc;
+	private ColorModel model;
 	private ArrayList<RDEventListener> plots;
 	
 	private static final Point2D.Double defTL = new Point2D.Double(-2.5, 1), 
@@ -42,7 +43,7 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 		this.h = h;
 		
 		plots = new ArrayList<RDEventListener>();
-		
+		model = InterpolatedColorModel.wikiMap;
 		view = new BufferedImage(this.w, this.h, BufferedImage.TYPE_INT_RGB);	
 
 		//calculator = new MCalcThreaded();
@@ -54,7 +55,7 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 	{
 		super.addNotify();
 		it = defIt;
-		invokeRDEvent(new RDEvent(new Dimension(w,h),defTL,defBR,it));
+		invokeRDEvent(new RDEvent(new Dimension(w,h),defTL,defBR,model,it));
 	}
 	
 	public Rectangle2D.Double getRect(Point2D.Double tl, Point2D.Double br)
@@ -72,16 +73,12 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 		vc = new ViewConverter(e.pixel_size, e.tl, e.br);
 
 		double[][] fdata = calculator.normalizedIterationValues(e);
-
 		
-		
-		ColorModel map = InterpolatedColorModel.wikiMap;
-		// = new SinusoidalColorMap(it);
-		
+		model = e.model;
 		
 		for(int x = 0; x < fdata.length; x++)
 			for(int y = 0; y < fdata[0].length; y++)
-				view.setRGB(x, y, map.getColor(fdata[x][y]).getRGB());
+				view.setRGB(x, y, model.getColor(fdata[x][y]).getRGB());
 
 		
 		// TODO adjust image size if needed
@@ -129,7 +126,7 @@ public class MPanel extends JPanel implements RDEventListener, MouseListener
 		Point2D.Double tl = new Point2D.Double(center.x - (dw/2d), center.y - dh/2d),
 				       br = new Point2D.Double(center.x + (dw/2d), center.y + dh/2d);
 		
-		invokeRDEvent(new RDEvent(new Dimension(w,h),tl,br,it));
+		invokeRDEvent(new RDEvent(new Dimension(w,h),tl,br, model,it));
 	}
 
 	@Override

@@ -4,19 +4,23 @@ import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.text.DecimalFormat;
 
+import com.fredwilby.math.mandelbrot.color.ColorModel;
+
 public class RDEvent
 {
-	public RDEvent(Dimension pxs, Point2D.Double tl, Point2D.Double br, long it)
+	public RDEvent(Dimension pxs, Point2D.Double tl, Point2D.Double br, ColorModel model, long it)
 	{
 		pixel_size = pxs;
 		this.tl = tl;
 		this.br = br; 
+		this.model = model;
 		iterations = it;
 	}
 	
 	public Dimension pixel_size;
 	public Point2D.Double tl, br;
 	public long iterations;
+	public ColorModel model;
 	
 	@Override
 	public String toString()

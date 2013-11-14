@@ -18,7 +18,7 @@ public class DirectHSVColorModel implements ColorModel
     @Override
     public String toString()
     {
-        return this.getClass().getSimpleName();
+        return "Rainbow";
     }
 
 }

@@ -18,6 +18,6 @@ public class BWColorModel implements ColorModel
     @Override
     public String toString()
     {
-        return this.getClass().getSimpleName();
+        return "Black and White";
     }
 }
