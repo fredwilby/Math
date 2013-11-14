@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
+import com.fredwilby.math.mandelbrot.ui_legacy.RDEvent;
+
 public class ViewConverter 
 {
 	public Dimension px;
@@ -15,6 +17,14 @@ public class ViewConverter
 		tl = ztl;
 		br = zbr;		
 	}
+	
+	public ViewConverter(RDEvent r)
+	{
+	    px = r.pixel_size;
+	    tl = r.tl;
+	    br = r.br;
+	}
+	
 	
 	public Point2D.Double convert(int pix, int piy)
 	{
