@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import com.fredwilby.math.mandelbrot.calc.MCalc;
 import com.fredwilby.math.mandelbrot.calc.MCalcarapi;
 import com.fredwilby.math.mandelbrot.calc.ViewConverter;
+import com.fredwilby.math.mandelbrot.color.BWColorModel;
 import com.fredwilby.math.mandelbrot.color.ColorModel;
 import com.fredwilby.math.mandelbrot.color.InterpolatedColorModel;
 

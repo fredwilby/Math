@@ -7,7 +7,7 @@ import com.fredwilby.math.mandelbrot.ui_legacy.RDEvent;
 
 public class MCalcarapi implements MCalc
 {
-	class MandelKernel extends Kernel
+	public static class MandelKernel extends Kernel
 	{
 		private double[] inputs, result;
 		private long max_it;
@@ -34,18 +34,26 @@ public class MCalcarapi implements MCalc
 			int it = 0;
 			 
 			double ci = inputs[2*i], cj = inputs[2*i+1];
-			double zi = 0, zj = 0;
-			  
-			while(zi*zi+zj*zj < 4 && it < max_it)
+			double zi = 0, zj = 0, zim = -1, zjm = -1;
+			boolean repeat = false;  
+			
+			
+			while(zi*zi+zj*zj < 4 && it < max_it && !repeat)
 			{
+			    zim = zi;
+			    zjm = zj;
+			    
 			    double t = zi*zi - zj*zj + ci;
 			    zj = 2*zi*zj + cj;
 			    zi = t;
-			      
+			    
+			    if(zim == zi && zjm == zj)
+			        repeat = true;
+			    
 			    it++;
 			}
 			
-			if(it == max_it)
+			if(it == max_it || repeat)
 				result[i] = 0;
 			else
 			{
@@ -57,9 +65,9 @@ public class MCalcarapi implements MCalc
 			 * log2(log(|Zn|)/log(2)) = 
 			 * log(log(|Zn|^2) / 2*log(2))/log(2)       
 			 */
-        result[i] = (double) it + 1d - Math.log((Math.log(zi*zi+zj*zj)/(2*log2)))/log2;
-      }
-  }
+			    result[i] = (double) it + 1d - Math.log((Math.log(zi*zi+zj*zj)/(2*log2)))/log2;
+			}
+        }
 	}
 
     @Override    
