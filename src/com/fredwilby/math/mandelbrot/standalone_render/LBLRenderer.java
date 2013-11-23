@@ -20,13 +20,20 @@ import com.fredwilby.math.mandelbrot.calc.ViewConverter;
 import com.fredwilby.math.mandelbrot.color.ColorModel;
 import com.fredwilby.math.mandelbrot.ui_legacy.RDEvent;
 
+/**
+ * Renders the mandelbrot to png, writing a set number of lines to disk at a 
+ * time. Provides a model for a progress bar. 
+ *
+ */
 public class LBLRenderer implements BoundedRangeModel
 {
+    private final int rows_at_a_time = 20; // TODO calc based on work
+    
     private File pngFile;
     private PngWriter output;
     private IImageLineFactory<ImageLineInt> factory;
     private ImageInfo pngInfo;
-    private final int rows_at_a_time = 50;
+    
     private ArrayList<ChangeListener> cls;
     
     private volatile ColorModel colorer; 
@@ -37,7 +44,9 @@ public class LBLRenderer implements BoundedRangeModel
     private boolean done = false;
     private ViewConverter vc;
     
-    
+    /**
+     * Creates a new Renderer with the given parameters and filename.
+     */
     public LBLRenderer(RDEvent param, String filename) throws FileNotFoundException
     {
         pngFile = new File(filename);
@@ -47,14 +56,12 @@ public class LBLRenderer implements BoundedRangeModel
         output = new PngWriter(pngFile, pngInfo);
         
         max_it = param.iterations;
-        
         vc = new ViewConverter(param);
-        
-        cls = new ArrayList<ChangeListener>();
-        
-        this.colorer = param.model;
+        colorer = param.model;
         
         factory = ImageLineInt.getFactory(pngInfo);
+        
+        cls = new ArrayList<ChangeListener>();
     }
     
     public void writeLines()
@@ -62,19 +69,18 @@ public class LBLRenderer implements BoundedRangeModel
         for(int y = 0; y <= pngInfo.rows/rows_at_a_time; y++)
         { 
             ImageLineInt[] rows;
+            int rowstodo = rows_at_a_time;
             
-            if(y != pngInfo.rows/rows_at_a_time)
-                rows = new ImageLineInt[rows_at_a_time];
-            else
-            {
-                int rowstodo = pngInfo.rows - rows_at_a_time*(pngInfo.rows/rows_at_a_time);
-                rows = new ImageLineInt[rowstodo];
-            }
+            /* last set of rows is incomplete*/
+            if(y == pngInfo.rows/rows_at_a_time)
+                rowstodo = pngInfo.rows - rows_at_a_time*(pngInfo.rows/rows_at_a_time);
             
+            rows = new ImageLineInt[rowstodo]; 
+           
             for(int x = 0; x < rows.length; x++)
                 rows[x] = factory.createImageLine(pngInfo);
             
-            double[] inputs = new double[pngInfo.cols*2*rows.length];
+            double[] inputs = new double[pngInfo.cols*2*rows.length]; 
             
             for(int x = 0; x < pngInfo.cols*rows.length; x++)
             {
@@ -139,24 +145,36 @@ public class LBLRenderer implements BoundedRangeModel
         
     }
 
+    /**
+     * Registers the given object to recieve updates when completion changes. 
+     */
     @Override
     public void addChangeListener(ChangeListener arg0)
     {
         cls.add(arg0);        
     }
 
+    /**
+     * Returns the extent of this model, 1.
+     */
     @Override
     public int getExtent()
     {
         return 1;
     }
 
+    /**
+     * Returns the maximum possible value for the progress. 
+     */
     @Override
     public int getMaximum()
     {
         return pngInfo.rows;
     }
 
+    /**
+     * Retruns the minimum possible value for the progress. 
+     */
     @Override
     public int getMinimum()
     {

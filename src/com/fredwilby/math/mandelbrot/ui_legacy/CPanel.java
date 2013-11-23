@@ -129,7 +129,7 @@ public class CPanel extends JPanel implements RDEventListener
 		
 		/* Render Button */
 		renderb = new JButton("Render");
-		renderb.addMouseListener(renderml);
+		renderb.addActionListener(renderml);
 		
 		add(renderb, new CC().growX().span(3).wrap());
 		
@@ -176,17 +176,38 @@ public class CPanel extends JPanel implements RDEventListener
 		add(saved, new CC().spanX(3).grow().wrap());
 	}
 	
-	private void render()
+	private Dimension getPixelSize() throws NumberFormatException
 	{
-	    String filename = "render-"+System.nanoTime()+".png";
+	    int w = -1, h = -1;
 	    
+	    w = Integer.parseInt(jwf.getText());
+	    
+	    
+	    /* Attempt to use input for height, otherwise calculate from aspect 
+	     * ratio. 
+	     */
+	    try 
+	    {
+	        h = Integer.parseInt(jhf.getText());   
+	    } 
+	    catch (NumberFormatException e)
+	    {
+	        h = (int)(((double) fh / (double) fw) * w);
+	    }
+	    
+	    return new Dimension(w, h);
+	}
+	
+	private void render()
+	{	    
 	    try
 	    {
-	        Dimension pixels = new Dimension(Integer.parseInt(jwf.getText()),
-	                                         Integer.parseInt(jhf.getText()));
+	        Dimension pixels = getPixelSize();
 	    
 	        RDEvent theEvent = getEvent();
 	        theEvent.pixel_size = pixels;
+	 
+	        String filename = "render"+theEvent.toString()+"-"+pixels.width+"x"+pixels.height+".png";
 	        
 	        jrl.setText("Rendering...");
 	        LBLRenderer rend = new LBLRenderer(theEvent, filename);
@@ -201,7 +222,7 @@ public class CPanel extends JPanel implements RDEventListener
 	        fnf.printStackTrace();
 	    }
 	    
-	    jrl.setText("Fractal rendered to: "+filename);
+	    jrl.setText("Render completed.");
 	}
 	
 	private int[] renderSize()
@@ -273,24 +294,15 @@ public class CPanel extends JPanel implements RDEventListener
 		jbrj.setText(Double.toString(br.y));
 	}
 	
-	private MouseListener renderml = new MouseListener() {
+	private ActionListener renderml = new ActionListener() {
 		@Override
-		public void mouseClicked(MouseEvent arg0) 
+		public void actionPerformed(ActionEvent arg0) 
 		{
-			render();
+		    new Thread(new Runnable(){ public void run () {
+			render(); }
+		    }).start();
 		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {}	
+	
 	};
     ActionListener redrawml = new ActionListener() {
 

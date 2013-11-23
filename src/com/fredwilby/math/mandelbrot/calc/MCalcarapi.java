@@ -37,15 +37,21 @@ public class MCalcarapi implements MCalc
 			double zi = 0, zj = 0, zim = -1, zjm = -1;
 			boolean repeat = false;  
 			
+			double p = Math.sqrt((ci-.25)*(ci-.25)+cj*cj);
+			
+			if(ci < p - 2*p*p + .25) // point is in set
+			    repeat = true;
+			
+			if((ci+1d)*(ci+1d)+cj*cj < .0625)
+			    repeat = true;
 			
 			while(zi*zi+zj*zj < 4 && it < max_it && !repeat)
 			{
 			    zim = zi;
 			    zjm = zj;
 			    
-			    double t = zi*zi - zj*zj + ci;
-			    zj = 2*zi*zj + cj;
-			    zi = t;
+			    zi = zi*zi - zj*zj + ci;
+			    zj = 2*zim*zj + cj;
 			    
 			    if(zim == zi && zjm == zj)
 			        repeat = true;
